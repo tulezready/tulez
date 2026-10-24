@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tulez Converter</title>
+  <meta name="description" content="Drag and drop file converter that runs entirely in your browser. Nothing is uploaded.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="12" fill="none" stroke="currentColor" stroke-width="6" stroke-dasharray="14 4.85"/></svg>
+      <span>Tulez Converter</span>
+    </div>
+    <p class="tagline">Drag. Drop. Converted. Everything stays on your device.</p>
+  </header>
+
+  <main>
+    <section id="dropzone" class="dropzone" tabindex="0" aria-label="Drop files here, or press Enter to choose files">
+      <div class="dz-inner">
+        <svg class="dz-icon" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 31V9m0 0-8 8m8-8 8 8M9 30v6a3 3 0 0 0 3 3h24a3 3 0 0 0 3-3v-6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <p class="dz-title">Drop files anywhere on this page</p>
+        <p class="dz-sub">A ring of formats opens where you drop. Pick one and the file converts on the spot.</p>
+        <button type="button" id="pick" class="btn">Choose files</button>
+        <input type="file" id="file-input" multiple hidden>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Settings</h2>
+      <div class="settings">
+        <label>Image quality <output id="quality-out"></output>
+          <input type="range" id="quality" min="0.3" max="1" step="0.05">
+        </label>
+        <label>Max image size
+          <select id="max-dim">
+            <option value="0">Original</option>
+            <option value="4096">4096 px</option>
+            <option value="2048">2048 px</option>
+            <option value="1280">1280 px</option>
+            <option value="640">640 px</option>
+          </select>
+        </label>
+        <label>PDF page DPI
+          <select id="pdf-dpi">
+            <option value="72">72</option>
+            <option value="150">150</option>
+            <option value="300">300</option>
+          </select>
+        </label>
+        <label class="check"><input type="checkbox" id="auto-dl"> Download automatically</label>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Results</h2>
+        <button type="button" id="clear" class="btn ghost" hidden>Clear</button>
+      </div>
+      <ul id="results" class="results"><li class="empty">Converted files show up here.</li></ul>
+    </section>
+
+    <section class="panel formats">
+      <h2>What it converts</h2>
+      <dl>
+        <div><dt>Images</dt><dd>PNG, JPG, WebP, GIF, BMP, ICO, SVG, AVIF, HEIC → PNG, JPG, WebP, BMP, ICO, PDF</dd></div>
+        <div><dt>PDF</dt><dd>PDF → PNG or JPG (one image per page), TXT</dd></div>
+        <div><dt>Documents</dt><dd>Word DOCX → HTML, Markdown, TXT, PDF · Markdown ↔ HTML · TXT → PDF, HTML</dd></div>
+        <div><dt>Spreadsheets</dt><dd>XLSX, XLS, ODS, CSV, TSV, Numbers → XLSX, ODS, CSV, TSV, JSON, HTML</dd></div>
+        <div><dt>Data</dt><dd>JSON ↔ YAML · JSON or YAML records → CSV, XLSX</dd></div>
+        <div><dt>Audio &amp; video</dt><dd>MP3, M4A, OGG, FLAC, MP4, WebM… → WAV · video → still frame PNG or JPG</dd></div>
+        <div><dt>Archives</dt><dd>Anything → ZIP · ZIP → its files</dd></div>
+      </dl>
+      <p class="note">Several images dropped on PDF become one PDF. Documents become text-only PDFs. Inspired by <a href="https://github.com/KnifeLemon/Filee" rel="noopener">Filee</a>.</p>
+    </section>
+  </main>
+
+  <div id="donut-layer" class="donut-layer" hidden>
+    <div id="donut" class="donut" role="dialog" aria-modal="true" aria-label="Choose a format"></div>
+  </div>
+
+  <div id="drag-hint" class="drag-hint" hidden><span>Drop to choose a format</span></div>
+
+  <script src="vendor/pdf.min.js"></script>
+  <script src="vendor/jspdf.umd.min.js"></script>
+  <script src="vendor/xlsx.full.min.js"></script>
+  <script src="vendor/mammoth.browser.min.js"></script>
+  <script src="vendor/jszip.min.js"></script>
+  <script src="vendor/js-yaml.min.js"></script>
+  <script src="vendor/marked.umd.js"></script>
+  <script src="vendor/turndown.browser.umd.js"></script>
+  <script src="vendor/heic2any.min.js" defer></script>
+  <script src="converters.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

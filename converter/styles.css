@@ -1,0 +1,159 @@
+:root {
+  --bg: #f6f5fb;
+  --surface: #ffffff;
+  --text: #1d1b29;
+  --muted: #625f73;
+  --border: #e2e0ec;
+  --accent: #6a62c9;
+  --accent-ink: #ffffff;
+  --danger: #c0392b;
+  --ok: #1d9e75;
+  --shadow: 0 10px 30px rgba(40, 30, 90, 0.12);
+
+  --cat-image: #7f77dd;
+  --cat-pdf: #d9534f;
+  --cat-document: #3b82c4;
+  --cat-sheet: #1d9e75;
+  --cat-data: #c98a1a;
+  --cat-audio: #c2569b;
+  --cat-archive: #6b7280;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14131b;
+    --surface: #1e1c28;
+    --text: #ecebf4;
+    --muted: #a3a0b5;
+    --border: #312e40;
+    --accent: #8d86e6;
+    --accent-ink: #14131b;
+    --danger: #ef6b5d;
+    --ok: #3cc497;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #14131b;
+  --surface: #1e1c28;
+  --text: #ecebf4;
+  --muted: #a3a0b5;
+  --border: #312e40;
+  --accent: #8d86e6;
+  --accent-ink: #14131b;
+  --danger: #ef6b5d;
+  --ok: #3cc497;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+a { color: var(--accent); }
+
+.top, main { max-width: 880px; margin: 0 auto; padding: 0 16px; }
+.top { padding-top: 28px; padding-bottom: 8px; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 20px; }
+.logo { width: 30px; height: 30px; color: var(--accent); }
+.tagline { margin: 4px 0 0; color: var(--muted); }
+
+main { display: grid; gap: 16px; padding-bottom: 48px; }
+
+.dropzone {
+  margin-top: 12px;
+  border: 2px dashed var(--border);
+  border-radius: 18px;
+  background: var(--surface);
+  padding: 48px 16px;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.15s, background 0.15s;
+}
+.dropzone:focus-visible, .dropzone.over { border-color: var(--accent); }
+.dz-icon { width: 48px; height: 48px; color: var(--accent); }
+.dz-title { font-size: 20px; font-weight: 650; margin: 8px 0 4px; }
+.dz-sub { color: var(--muted); margin: 0 auto 18px; max-width: 440px; }
+
+.btn {
+  font: inherit;
+  font-weight: 600;
+  border: 0;
+  border-radius: 10px;
+  padding: 9px 18px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  cursor: pointer;
+}
+.btn.ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); padding: 5px 12px; }
+.btn:focus-visible { outline: 3px solid color-mix(in srgb, var(--accent) 45%, transparent); outline-offset: 2px; }
+
+.panel { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px 18px; }
+.panel h2 { font-size: 15px; margin: 0 0 12px; }
+.panel-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.panel-head h2 { margin: 0; }
+
+.settings { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px 18px; align-items: end; }
+.settings label { display: grid; gap: 4px; color: var(--muted); font-size: 13px; }
+.settings label.check { display: flex; align-items: center; gap: 8px; color: var(--text); font-size: 14px; }
+.settings select, .settings input[type="range"] { font: inherit; width: 100%; accent-color: var(--accent); }
+.settings select { padding: 6px 8px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text); }
+output { color: var(--text); font-variant-numeric: tabular-nums; }
+
+.results { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.results .empty { color: var(--muted); }
+.job { border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; }
+.job-head { display: flex; gap: 10px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+.job-title { font-weight: 600; overflow-wrap: anywhere; }
+.job-status { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+.job-status.ok { color: var(--ok); }
+.job-status.err { color: var(--danger); }
+.job-files { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.job-files a {
+  font-size: 13px;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 3px 10px;
+  overflow-wrap: anywhere;
+}
+.job-files a.all { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.job-errors { margin: 6px 0 0; padding-left: 18px; color: var(--danger); font-size: 13px; }
+.spinner { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--border); border-top-color: var(--accent); animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.formats dl { margin: 0; display: grid; gap: 8px; }
+.formats dl div { display: grid; grid-template-columns: 120px 1fr; gap: 12px; }
+.formats dt { font-weight: 600; }
+.formats dd { margin: 0; color: var(--muted); }
+.note { color: var(--muted); font-size: 13px; margin: 14px 0 0; }
+@media (max-width: 520px) { .formats dl div { grid-template-columns: 1fr; gap: 0; } }
+
+/* Drag hint and donut */
+.drag-hint {
+  position: fixed; inset: 0; z-index: 10; pointer-events: none;
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  display: grid; place-items: center;
+}
+.drag-hint span { background: var(--surface); color: var(--text); padding: 10px 18px; border-radius: 999px; box-shadow: var(--shadow); font-weight: 600; }
+
+.donut-layer { position: fixed; inset: 0; z-index: 20; background: rgba(10, 8, 25, 0.25); }
+.donut { position: absolute; width: 300px; height: 300px; animation: pop 0.16s ease-out; }
+@keyframes pop { from { transform: scale(0.6); opacity: 0; } }
+.donut svg { width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.25)); }
+.seg { outline: none; }
+.seg path { stroke: var(--surface); stroke-width: 2; cursor: pointer; transition: filter 0.12s; }
+.seg:hover path, .seg:focus-visible path { filter: brightness(1.12); }
+.seg:focus-visible path { stroke: var(--text); stroke-width: 3; }
+.seg text { fill: #fff; font-weight: 700; font-size: 13px; pointer-events: none; }
+.hub { fill: var(--surface); }
+.hub-text { fill: var(--text); font-size: 13px; font-weight: 600; }
+.hub-sub { fill: var(--muted); font-size: 11px; }
+.donut-empty { background: var(--surface); color: var(--text); border-radius: 14px; padding: 16px; box-shadow: var(--shadow); width: 260px; }
